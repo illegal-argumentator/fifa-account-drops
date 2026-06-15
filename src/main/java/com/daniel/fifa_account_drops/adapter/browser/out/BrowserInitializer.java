@@ -1,0 +1,9 @@
+package com.daniel.fifa_account_drops.adapter.browser.out;
+
+public interface BrowserInitializer {
+
+    Browser init();
+
+    Browser initOverCdp(String profileId);
+
+}

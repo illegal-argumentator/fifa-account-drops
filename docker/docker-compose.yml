@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  accounts_db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  nstbrowser-daniel-accounts-validation:
+    image: nstbrowser/browserless:140-202511181200.v2
+    restart: unless-stopped
+    networks:
+      - daniel-accounts-validation
+    environment:
+      TOKEN: ${NST_TOKEN}
+    ports:
+      - "8848:8848"
+
+volumes:
+  pgdata:
