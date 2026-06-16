@@ -16,43 +16,67 @@ import java.util.List;
 @RequiredArgsConstructor
 final class PlaywrightBrowser implements Browser {
 
+    private final Page page;
+    private final List<AutoCloseable> autoCloseables;
     @Value("${browser.timeout.default}")
     private long DEFAULT_TIMEOUT;
 
-    private final Page page;
-    private final List<AutoCloseable> autoCloseables;
-
     @Override
     public void navigate(String url) {
-        page.navigate(url, new Page.NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED).setTimeout(DEFAULT_TIMEOUT));
-    }
-
-
-    @Override
-    public void waitForSelector(String selector, double timeout, Runnable action) {
-        Locator locator = page.locator(selector);
-        boolean appeared;
-
         try {
-            locator.waitFor(new Locator.WaitForOptions().setTimeout(timeout));
-            appeared = locator.isVisible(new Locator.IsVisibleOptions().setTimeout(timeout));
-
-            if (appeared) {
-                action.run();;
-            }
+            page.navigate(url, new Page.NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED).setTimeout(DEFAULT_TIMEOUT));
         } catch (PlaywrightException e) {
-            log.warn("Element %s not found.".formatted(selector));
+            log.error("Unable to navigate: {}.", url);
+            throw new RuntimeException(e);
         }
     }
 
     @Override
+    public void waitForSelector(String selector) {
+        waitForSelector(selector, DEFAULT_TIMEOUT);
+    }
+
+    @Override
+    public void waitForSelector(String selector, long timeout) {
+        try {
+            Locator locator = page.locator(selector);
+            locator.waitFor(new Locator.WaitForOptions().setTimeout(timeout));
+            locator.isVisible(new Locator.IsVisibleOptions().setTimeout(timeout));
+        } catch (PlaywrightException e) {
+            log.warn("Element %s not found.".formatted(selector));
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Override
     public void fill(String selector, String value) {
-        page.fill(selector, value);
+        try {
+            page.fill(selector, value);
+        } catch (PlaywrightException e) {
+            log.warn("Element %s not found.".formatted(selector));
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void click(String selector) {
-        page.click(selector);
+        try {
+            page.click(selector);
+        } catch (PlaywrightException e) {
+            log.warn("Element %s not found.".formatted(selector));
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean isVisible(String selector) {
+        try {
+            return page.locator(selector).isVisible();
+        } catch (PlaywrightException e) {
+            log.warn("Element %s not found.".formatted(selector));
+            return false;
+        }
     }
 
     @Override

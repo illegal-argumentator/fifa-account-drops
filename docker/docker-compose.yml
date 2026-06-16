@@ -13,15 +13,24 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  nstbrowser-daniel-accounts-validation:
-    image: nstbrowser/browserless:140-202511181200.v2
-    restart: unless-stopped
-    networks:
-      - daniel-accounts-validation
+  accounts-nstbrowserless:
+    image: nstbrowser/browserless:143-202601221200.v3
+    container_name: nstbrowserless
     environment:
       TOKEN: ${NST_TOKEN}
+      VNC_PORT: 6900
+      VNC_PASSWORD: 1234
+      CHROME_ARGS: >
+        --disable-blink-features=AutomationControlled
+        --disable-infobars
+        --disable-web-security
+        --disable-features=site-per-process
+        --start-maximized
+        --no-sandbox
     ports:
-      - "8848:8848"
+      - "8000:8848"
+      - "6900:6900"
+    restart: unless-stopped
 
 volumes:
   pgdata:

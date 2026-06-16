@@ -4,6 +4,4 @@ public interface BrowserInitializer {
 
     Browser init();
 
-    Browser initOverCdp(String profileId);
-
 }

@@ -19,26 +19,12 @@ final class AccountDropsService implements AccountDropsUseCase {
     private final AccountQueryPort accountQueryPort;
     private final AccountDropsCommandPort accountDropsCommandPort;
 
-    private final int limit;
-    private final int startFrom;
-
     @Override
     public void process() {
         List<Account> pendingAccounts = accountQueryPort.getAllBy(Status.PENDING);
         log.info("Found {} accounts.", pendingAccounts.size());
 
         if (pendingAccounts.isEmpty()) return;
-        processWithBatch(pendingAccounts);
-    }
-
-    private void processWithBatch(List<Account> pendingAccounts) {
-        int start = startFrom;
-        while (start < pendingAccounts.size()) {
-            log.info("Start position is: {}.", start);
-            int end = Math.min(start + limit, pendingAccounts.size());
-
-            accountDropsCommandPort.process(pendingAccounts.subList(start, end), end < start + limit);
-            start += limit;
-        }
+        accountDropsCommandPort.process(pendingAccounts);
     }
 }

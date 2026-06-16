@@ -25,9 +25,10 @@ final class OkHttpService implements HttpService {
 
     @Override
     public String execute(HttpBody httpBody) {
-        okhttp3.MediaType mediaType = okhttp3.MediaType.get(MediaType.APPLICATION_JSON.getType());
+        okhttp3.MediaType mediaType = okhttp3.MediaType.get(MediaType.APPLICATION_JSON_VALUE);
         Request request = new Request.Builder()
                 .url(httpBody.url())
+                .headers(Headers.of(httpBody.headers()))
                 .method(httpBody.method().name(), RequestBody.create(objectMapper.writeValueAsString(httpBody.body()), mediaType))
                 .build();
 

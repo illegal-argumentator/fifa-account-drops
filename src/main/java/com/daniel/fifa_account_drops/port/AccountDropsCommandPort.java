@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface AccountDropsCommandPort {
 
-    void process(List<Account> accounts, boolean immediateClose);
+    void process(List<Account> accounts);
 
 }

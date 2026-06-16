@@ -11,7 +11,7 @@ public record HttpBody(
 
     public enum Method {
         POST,
-        GET;
+        GET
     }
 
 }

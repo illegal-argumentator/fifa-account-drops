@@ -1,7 +1,7 @@
 package com.daniel.fifa_account_drops.adapter.browser.out.nst;
 
 import com.daniel.fifa_account_drops.adapter.browser.out.nst.dto.CreateProfileRequest;
-import com.daniel.fifa_account_drops.adapter.browser.out.nst.dto.CreateProfileResponse;
+import com.daniel.fifa_account_drops.adapter.browser.out.nst.dto.ProfileResponse;
 import com.daniel.fifa_account_drops.adapter.browser.out.nst.props.NstProps;
 import com.daniel.fifa_account_drops.adapter.http.out.HttpBody;
 import com.daniel.fifa_account_drops.adapter.http.out.HttpService;
@@ -18,7 +18,7 @@ public class NstClient implements IdentityProtectionBrowserPort {
     private final HttpService httpService;
 
     @Override
-    public CreateProfileResponse createProfile(String profileName, String proxyUrl) {
+    public ProfileResponse createProfile(String profileName, String proxyUrl) {
         CreateProfileRequest request = new CreateProfileRequest(profileName, proxyUrl, props.getGroupId());
         HttpBody httpBody = new HttpBody(
                 props.getUrl() + "/profiles",
@@ -27,6 +27,7 @@ public class NstClient implements IdentityProtectionBrowserPort {
                 Map.of("x-api-key", props.getApiKey())
         );
 
-        return httpService.execute(httpBody, CreateProfileResponse.class);
+        return httpService.execute(httpBody, ProfileResponse.class);
     }
+
 }
