@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 @Slf4j
 @Component

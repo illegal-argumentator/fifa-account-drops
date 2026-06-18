@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     ports:
-      - "5432:5432"
+      - "7194:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -18,7 +18,7 @@ services:
     container_name: nstbrowserless
     environment:
       TOKEN: ${NST_TOKEN}
-      VNC_PORT: 6900
+      VNC_PORT: 6461
       VNC_PASSWORD: 1234
       CHROME_ARGS: >
         --disable-blink-features=AutomationControlled
@@ -28,8 +28,8 @@ services:
         --start-maximized
         --no-sandbox
     ports:
-      - "8000:8848"
-      - "6900:6900"
+      - "9593:8848"
+      - "6461:6900"
     restart: unless-stopped
 
 volumes:
