@@ -53,7 +53,7 @@ class DropsFlowService {
             allowDrops(account, browser);
 
         } catch (Exception e) {
-            log.error("Exception while processing account: {}.", e.getMessage());
+            log.error("Exception while processing account: {}.", e.getMessage().length() > 1_500 ? e.getMessage().substring(0, 1_500) + "..." : e.getMessage());
             return Optional.empty();
         }
 
@@ -95,7 +95,7 @@ class DropsFlowService {
         WaitUtils.waitSafely(1);
         browser.click(LOGIN_BUTTON);
 
-        if (browser.isVisible(DEFAULT_CAPTCHA_ID, DEFAULT_TIMEOUT / 6)) {
+        if (browser.isVisible(DEFAULT_CAPTCHA_SOLVER_DIV, DEFAULT_TIMEOUT / 6)) {
             log.info("Default captcha spotted.");
             waitForCaptchaSolution(browser);
         }

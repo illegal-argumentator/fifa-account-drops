@@ -4,6 +4,7 @@ import com.daniel.fifa_account_drops.domain.Account;
 import com.daniel.fifa_account_drops.domain.Status;
 import com.daniel.fifa_account_drops.port.external.AccountDropCommandPort;
 import com.daniel.fifa_account_drops.port.internal.AccountCommandPort;
+import com.daniel.fifa_account_drops.shared.WaitUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,8 @@ public class AccountDropCommandAdapter implements AccountDropCommandPort {
 
         if (process.isEmpty()) {
             accountCommandPort.update(account.id(), Status.PENDING);
+            log.info("Could not proceed account. Sleeping for 10 minutes.");
+            WaitUtils.waitSafely(60 * 10);
         } else {
             dropsFlowService.finishProcess(process);
         }

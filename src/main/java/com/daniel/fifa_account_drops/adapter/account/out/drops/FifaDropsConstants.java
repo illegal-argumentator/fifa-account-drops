@@ -26,7 +26,6 @@ final class FifaDropsConstants {
 
     static final String INVALID_CREDS_DIV = "div:has-text('Invalid email or password.')";
 
-    static final String DEFAULT_CAPTCHA_ID = "#recaptcha-anchor-label";
     static final String DEFAULT_CAPTCHA_SOLVER_DIV = "div[class=\\\"capsolver-solver-info\\\"";
     static final String DEFAULT_CAPTCHA_SOLVING_TEXT = "Solving...";
     static final String NUMBERS_CAPTCHA_IMG = "img.captcha-code";
