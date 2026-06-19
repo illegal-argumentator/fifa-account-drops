@@ -14,6 +14,6 @@ WORKDIR /app
 
 COPY --from=build /build/target/fifa-account-drops*.jar fifa-account-drops.jar
 
-EXPOSE 68109
+EXPOSE 6810
 
 CMD ["java", "-jar", "fifa-account-drops.jar"]
