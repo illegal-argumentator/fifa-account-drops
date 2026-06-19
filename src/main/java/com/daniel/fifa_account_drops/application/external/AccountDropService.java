@@ -8,12 +8,14 @@ import com.daniel.fifa_account_drops.port.internal.AccountDropsCommandPort;
 import com.daniel.fifa_account_drops.port.external.ExternalAccountQueryPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
 @Service
+@Profile("user")
 @RequiredArgsConstructor
 public class AccountDropService implements AccountDropUseCase {
 

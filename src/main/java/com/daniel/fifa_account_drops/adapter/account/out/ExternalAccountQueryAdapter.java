@@ -6,11 +6,13 @@ import com.daniel.fifa_account_drops.domain.Account;
 import com.daniel.fifa_account_drops.port.external.ExternalAccountQueryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 @Component
+@Profile("user")
 @RequiredArgsConstructor
 public class ExternalAccountQueryAdapter implements ExternalAccountQueryPort {
 
