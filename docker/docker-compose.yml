@@ -5,11 +5,11 @@ services:
     image: postgres:16
     restart: unless-stopped
     environment:
-      POSTGRES_DB: db
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "7194:5432"
+      - "${POSTGRES_PORT}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -18,8 +18,8 @@ services:
     container_name: nstbrowserless
     environment:
       TOKEN: ${NST_TOKEN}
-      VNC_PORT: 6461
-      VNC_PASSWORD: 1234
+      VNC_PORT: ${VNC_PORT}
+      VNC_PASSWORD: ${VNC_PASSWORD}
       CHROME_ARGS: >
         --disable-blink-features=AutomationControlled
         --disable-infobars
@@ -28,9 +28,22 @@ services:
         --start-maximized
         --no-sandbox
     ports:
-      - "9593:8848"
-      - "6461:6900"
+      - "${NST_PORT}:8848"
+      - "${VNC_PORT}:6900"
     restart: unless-stopped
+
+  fifa-account-drop-app:
+    env_file:
+      - .env
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    depends_on:
+      - accounts_db
+      - accounts-nstbrowserless
 
 volumes:
   pgdata:
