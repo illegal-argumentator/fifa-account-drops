@@ -40,7 +40,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "${APP_PORT}:${APP_PORT}"
+      - "${APP_PORT}:8080"
     depends_on:
       - accounts_db
       - accounts-nstbrowserless
