@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 @RequiredArgsConstructor
 public class ExternalAccountQueryAdapter implements ExternalAccountQueryPort {
@@ -19,7 +21,7 @@ public class ExternalAccountQueryAdapter implements ExternalAccountQueryPort {
 
     @Override
     public Account retrieve() {
-        HttpBody httpBody = new HttpBody(SERVER_URL + "/accounts/pick", HttpBody.Method.GET, null, null);
+        HttpBody httpBody = new HttpBody(SERVER_URL + "/accounts/pick", HttpBody.Method.GET, null, Map.of());
         return httpService.execute(httpBody, Account.class);
     }
 }
