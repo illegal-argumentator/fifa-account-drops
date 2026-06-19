@@ -5,7 +5,7 @@ import com.daniel.fifa_account_drops.adapter.account.out.persistence.PostgresAcc
 import com.daniel.fifa_account_drops.adapter.account.out.persistence.PostgresAccountRepository;
 import com.daniel.fifa_account_drops.domain.Account;
 import com.daniel.fifa_account_drops.domain.Status;
-import com.daniel.fifa_account_drops.port.AccountQueryPort;
+import com.daniel.fifa_account_drops.port.internal.AccountQueryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

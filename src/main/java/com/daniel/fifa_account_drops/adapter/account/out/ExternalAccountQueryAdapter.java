@@ -3,7 +3,7 @@ package com.daniel.fifa_account_drops.adapter.account.out;
 import com.daniel.fifa_account_drops.adapter.http.out.HttpBody;
 import com.daniel.fifa_account_drops.adapter.http.out.HttpService;
 import com.daniel.fifa_account_drops.domain.Account;
-import com.daniel.fifa_account_drops.port.ExternalAccountQueryPort;
+import com.daniel.fifa_account_drops.port.external.ExternalAccountQueryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

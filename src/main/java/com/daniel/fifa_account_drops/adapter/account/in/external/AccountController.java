@@ -1,7 +1,7 @@
-package com.daniel.fifa_account_drops.adapter.account.in;
+package com.daniel.fifa_account_drops.adapter.account.in.external;
 
 import com.daniel.fifa_account_drops.domain.Account;
-import com.daniel.fifa_account_drops.port.AccountUseCase;
+import com.daniel.fifa_account_drops.port.external.AccountUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

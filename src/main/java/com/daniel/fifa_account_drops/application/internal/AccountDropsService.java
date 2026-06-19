@@ -1,10 +1,10 @@
-package com.daniel.fifa_account_drops.application;
+package com.daniel.fifa_account_drops.application.internal;
 
 import com.daniel.fifa_account_drops.domain.Account;
 import com.daniel.fifa_account_drops.domain.Status;
-import com.daniel.fifa_account_drops.port.AccountDropsCommandPort;
-import com.daniel.fifa_account_drops.port.AccountDropsUseCase;
-import com.daniel.fifa_account_drops.port.AccountQueryPort;
+import com.daniel.fifa_account_drops.port.internal.AccountDropsCommandPort;
+import com.daniel.fifa_account_drops.port.internal.AccountDropsUseCase;
+import com.daniel.fifa_account_drops.port.internal.AccountQueryPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

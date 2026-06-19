@@ -4,7 +4,7 @@ import com.daniel.fifa_account_drops.adapter.account.out.persistence.PostgresAcc
 import com.daniel.fifa_account_drops.adapter.account.out.persistence.PostgresAccountRepository;
 import com.daniel.fifa_account_drops.domain.AccountNotFoundException;
 import com.daniel.fifa_account_drops.domain.Status;
-import com.daniel.fifa_account_drops.port.AccountCommandPort;
+import com.daniel.fifa_account_drops.port.internal.AccountCommandPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

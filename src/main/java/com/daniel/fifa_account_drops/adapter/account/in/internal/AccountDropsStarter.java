@@ -1,6 +1,6 @@
-package com.daniel.fifa_account_drops.adapter.account.in;
+package com.daniel.fifa_account_drops.adapter.account.in.internal;
 
-import com.daniel.fifa_account_drops.port.AccountDropsUseCase;
+import com.daniel.fifa_account_drops.port.internal.AccountDropsUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;

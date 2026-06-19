@@ -1,6 +1,6 @@
-package com.daniel.fifa_account_drops.adapter.account.in;
+package com.daniel.fifa_account_drops.adapter.account.in.external;
 
-import com.daniel.fifa_account_drops.port.AccountDropUseCase;
+import com.daniel.fifa_account_drops.port.external.AccountDropUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Profile("user")
 @RequiredArgsConstructor
-public class AccountUserDropStarter implements ApplicationRunner {
+public class AccountDropStarter implements ApplicationRunner {
 
     private final AccountDropUseCase accountDropUseCase;
 

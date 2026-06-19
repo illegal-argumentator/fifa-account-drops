@@ -1,4 +1,4 @@
-package com.daniel.fifa_account_drops.port;
+package com.daniel.fifa_account_drops.port.internal;
 
 import com.daniel.fifa_account_drops.domain.Account;
 
