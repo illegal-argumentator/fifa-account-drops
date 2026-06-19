@@ -11,6 +11,7 @@ import com.daniel.fifa_account_drops.port.AccountCommandPort;
 import com.daniel.fifa_account_drops.port.AccountDropsCommandPort;
 import com.daniel.fifa_account_drops.shared.ExecutorUtils;
 import com.daniel.fifa_account_drops.shared.WaitUtils;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +40,12 @@ final class AccountDropsCommandAdapter implements AccountDropsCommandPort {
 
     @Value("${threads.count}")
     private int threads;
-    private final Semaphore semaphore = new Semaphore(threads);
+    private Semaphore semaphore;
+
+    @PostConstruct
+    public void init() {
+        this.semaphore = new Semaphore(threads);
+    }
 
     @Value("${browser.timeout.default}")
     private long DEFAULT_TIMEOUT;
@@ -55,6 +61,7 @@ final class AccountDropsCommandAdapter implements AccountDropsCommandPort {
     @Override
     public void process(List<Account> accounts) {
         log.info("Starting flow.");
+
         try {
             List<CompletableFuture<Void>> futures = accounts.stream()
                     .map(account -> CompletableFuture.runAsync(() -> {
