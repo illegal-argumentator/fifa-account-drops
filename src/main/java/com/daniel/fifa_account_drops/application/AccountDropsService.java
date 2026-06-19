@@ -24,7 +24,10 @@ final class AccountDropsService implements AccountDropsUseCase {
         List<Account> pendingAccounts = accountQueryPort.getAllBy(Status.PENDING);
         log.info("Found {} accounts.", pendingAccounts.size());
 
-        if (pendingAccounts.isEmpty()) return;
+        if (pendingAccounts.isEmpty()) {
+            log.info("No accounts. Stopping.");
+            return;
+        }
         accountDropsCommandPort.process(pendingAccounts);
     }
 }

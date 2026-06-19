@@ -54,6 +54,7 @@ final class AccountDropsCommandAdapter implements AccountDropsCommandPort {
 
     @Override
     public void process(List<Account> accounts) {
+        log.info("Starting flow.");
         try {
             List<CompletableFuture<Void>> futures = accounts.stream()
                     .map(account -> CompletableFuture.runAsync(() -> {
