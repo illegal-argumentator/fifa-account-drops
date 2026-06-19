@@ -15,7 +15,6 @@ services:
 
   accounts-nstbrowserless:
     image: nstbrowser/browserless:143-202601221200.v3
-    container_name: nstbrowserless
     environment:
       TOKEN: ${NST_TOKEN}
       VNC_PORT: ${VNC_PORT}
