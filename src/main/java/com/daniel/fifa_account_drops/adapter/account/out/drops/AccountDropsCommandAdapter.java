@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static com.daniel.fifa_account_drops.adapter.account.out.drops.FifaDropsConstants.*;
@@ -36,6 +37,10 @@ final class AccountDropsCommandAdapter implements AccountDropsCommandPort {
     private final AccountCommandPort accountCommandPort;
     private final IdentityProtectionBrowserPort identityProtectionBrowserPort;
 
+    @Value("${threads.count}")
+    private int threads;
+    private final Semaphore semaphore = new Semaphore(threads);
+
     @Value("${browser.timeout.default}")
     private long DEFAULT_TIMEOUT;
     @Value("${browser.timeout.queue}")
@@ -50,18 +55,27 @@ final class AccountDropsCommandAdapter implements AccountDropsCommandPort {
     @Override
     public void process(List<Account> accounts) {
         try {
-            List<CompletableFuture<Optional<Account>>> futures = accounts.stream().map(this::processAsync).toList();
-            futures.stream().map(CompletableFuture::join).forEach(this::finishProcess);
+            List<CompletableFuture<Void>> futures = accounts.stream()
+                    .map(account -> CompletableFuture.runAsync(() -> {
+                        try {
+                            semaphore.acquire();
+
+                            log.info("Processing {}", account.email());
+                            Optional<Account> result = process(account);
+                            finishProcess(result);
+
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        } finally {
+                            semaphore.release();
+                        }
+                    }, executor))
+                    .toList();
+
+            futures.forEach(CompletableFuture::join);
         } finally {
             ExecutorUtils.shutDownGracefully(executor);
         }
-    }
-
-    private CompletableFuture<Optional<Account>> processAsync(Account account) {
-        return CompletableFuture.supplyAsync(() -> {
-            log.info("Processing account: {}.", account.email());
-            return process(account);
-        }, executor);
     }
 
     private Optional<Account> process(Account account) {
@@ -166,10 +180,6 @@ final class AccountDropsCommandAdapter implements AccountDropsCommandPort {
 
         boolean clearProxy = new Random().nextInt(100) <= 20;
         return clearProxy ? null : proxy;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new Random().nextInt(100));
     }
 
     private void finishProcess(Optional<Account> account) {
