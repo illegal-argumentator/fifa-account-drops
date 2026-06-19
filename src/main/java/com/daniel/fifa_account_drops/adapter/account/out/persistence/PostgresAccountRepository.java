@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PostgresAccountRepository extends JpaRepository<PostgresAccount, Long> {
     List<PostgresAccount> findAllByStatus(Status status);
+    PostgresAccount findFirstByStatus(Status status);
 }

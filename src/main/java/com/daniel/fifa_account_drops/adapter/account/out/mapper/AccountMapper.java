@@ -11,5 +11,6 @@ import java.util.List;
 public interface AccountMapper {
 
     List<Account> toAccounts(List<PostgresAccount> entities);
+    Account toAccount(PostgresAccount entity);
 
 }

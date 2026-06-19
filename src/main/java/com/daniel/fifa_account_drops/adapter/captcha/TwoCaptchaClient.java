@@ -19,9 +19,6 @@ public class TwoCaptchaClient implements CaptchaClient {
     @Value("${captcha.key}")
     private String API_KEY;
 
-    @Value("${captcha.retries}")
-    private int RETRIES;
-
     private static final String BASE_URL = "https://api.2captcha.com";
     private static final String CREATE_TASK = "/createTask";
     private static final String GET_TASK_RESULT = "/getTaskResult";
@@ -55,7 +52,7 @@ public class TwoCaptchaClient implements CaptchaClient {
     }
 
     private String waitForResult(long taskId) {
-        for (int i = 0; i < RETRIES; i++) {
+        for (int i = 0; i < 20; i++) {
             Map<String, Object> map = Map.of(CLIENT_KEY_PREFIX, API_KEY, TASK_ID_PREFIX, taskId);
             String json = OBJECT_MAPPER.writeValueAsString(map);
 
